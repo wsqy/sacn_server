@@ -25,7 +25,7 @@ SECRET_KEY = '-jb@l!uaeg4-#v0q$av5o=62lm02&ts1hiqxneo8&=pr(jg)b$'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -36,7 +36,10 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'rest_framework',
     'django.contrib.staticfiles',
+    'django_filters',
+    'scanBase.apps.ScanbaseConfig',
 ]
 
 MIDDLEWARE = [
@@ -75,8 +78,22 @@ WSGI_APPLICATION = 'scanserver.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        # 数据库引擎
+        'ENGINE': 'django.db.backends.mysql',
+        # 数据库名
+        'NAME': 'scan_server',
+        # 用户名
+        'USER': 'scan_server',
+        # 密码
+        'PASSWORD': 'jiDFy78ht',
+        # 安装mysql数据库的主机ip
+        'HOST': '123.206.210.196',
+        'OPTIONS': {
+            'autocommit': True,
+            'init_command': 'SET default_storage_engine=INNODB',
+            "charset": "utf8mb4",
+
+        },
     }
 }
 
@@ -103,18 +120,26 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'zh-Hans'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Shanghai'
 
 USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
+
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',)
+}
