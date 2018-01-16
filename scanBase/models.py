@@ -7,9 +7,9 @@ class CountryInfo(models.Model):
     country_cn = models.CharField(max_length=30, verbose_name="中文名")
     country_en = models.CharField(max_length=30, verbose_name="英文名")
     letter2 = models.CharField(max_length=2, verbose_name="二位英文代码")
-    letter3 = models.CharField(max_length=3, verbose_name="三位英文代码")
+    letter3 = models.CharField(max_length=3, verbose_name="三位英文代码", unique=True, blank=True, null=True)
     digital_code = models.CharField(max_length=5, verbose_name="数字代码")
-    ISO_3166_2_code = models.CharField(max_length=30, verbose_name="ISO-3166-2标准代码")
+    ISO_3166_2_code = models.CharField(max_length=30, verbose_name="ISO-3166-2标准代码", unique=True, blank=True, null=True)
 
     class Meta:
         verbose_name = "国家地区信息表"
@@ -17,3 +17,19 @@ class CountryInfo(models.Model):
 
     def __str__(self):
         return self.country_cn
+
+
+class IPSection(models.Model):
+    country = models.ForeignKey(CountryInfo, verbose_name="所属国家")
+    ip_section = models.CharField(max_length=30, verbose_name="ip段", unique=True, blank=True, null=True)
+    ip_start = models.GenericIPAddressField(verbose_name="开始ip", blank=True, null=True)
+    ip_end = models.GenericIPAddressField(verbose_name="结束ip", blank=True, null=True)
+    total = models.IntegerField(verbose_name="总量", blank=True, null=True)
+    deal_time = models.DateTimeField(verbose_name="处理时间", blank=True, null=True)
+
+    class Meta:
+        verbose_name = "ip段信息"
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.ip_section

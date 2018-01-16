@@ -1,0 +1,5 @@
+Django==1.11
+djangorestframework==3.7.3
+django-filter==1.1.0
+coreapi==2.3.3
+ipaddr==2.2.0
