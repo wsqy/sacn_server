@@ -65,7 +65,7 @@ def dump_ip_section_data(ip_section=None, CountryInfo=None):
             section_objects = IPSection.objects.filter(ip_section=_section)
             if section_objects.count() > 0 and not section_objects[0].deal_time:
                 dump_ip_info(ips.iterhosts(), CountryInfo, section_objects[0])
-        finally:
+        else:
             dump_ip_info(ips.iterhosts(), CountryInfo, ip_section)
 
 def dump_ip_info(ip_iterhosts=None, CountryInfo=None, ip_section=None):
