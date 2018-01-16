@@ -38,7 +38,7 @@ class IPSection(models.Model):
 class IPInfo(models.Model):
     country = models.ForeignKey(CountryInfo, verbose_name="所属国家")
     iP_section = models.ForeignKey(IPSection, verbose_name="所属ip段")
-    ip = models.GenericIPAddressField(verbose_name="ip", blank=True, null=True)
+    ip = models.GenericIPAddressField(verbose_name="ip", unique=True, blank=True, null=True)
     deal_time = models.DateTimeField(verbose_name="扫描时间", blank=True, null=True)
 
     class Meta:
