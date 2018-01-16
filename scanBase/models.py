@@ -22,8 +22,8 @@ class CountryInfo(models.Model):
 class IPSection(models.Model):
     country = models.ForeignKey(CountryInfo, verbose_name="所属国家")
     ip_section = models.CharField(max_length=30, verbose_name="ip段", unique=True, blank=True, null=True)
-    ip_start = models.GenericIPAddressField(verbose_name="开始ip", blank=True, null=True)
-    ip_end = models.GenericIPAddressField(verbose_name="结束ip", blank=True, null=True)
+    network = models.GenericIPAddressField(verbose_name="网关地址", blank=True, null=True)
+    netmask = models.GenericIPAddressField(verbose_name="广播地址", blank=True, null=True)
     total = models.IntegerField(verbose_name="总量", blank=True, null=True)
     deal_time = models.DateTimeField(verbose_name="处理时间", blank=True, null=True)
 
@@ -33,3 +33,17 @@ class IPSection(models.Model):
 
     def __str__(self):
         return self.ip_section
+
+
+class IPInfo(models.Model):
+    country = models.ForeignKey(CountryInfo, verbose_name="所属国家")
+    iP_section = models.ForeignKey(IPSection, verbose_name="所属ip段")
+    ip = models.GenericIPAddressField(verbose_name="ip", blank=True, null=True)
+    deal_time = models.DateTimeField(verbose_name="扫描时间", blank=True, null=True)
+
+    class Meta:
+        verbose_name = "ip信息"
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.ip
